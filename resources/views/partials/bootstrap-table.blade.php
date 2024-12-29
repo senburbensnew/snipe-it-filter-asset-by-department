@@ -744,7 +744,8 @@
         console.log(row);
 
         if ((row) && (row.department)) {
-            return '<a href="{{ config('app.url') }}/hardware/?company_id=' + row.department.id + '">' + row.department.name + '</a>';
+            // return '<a href="{{ config('app.url') }}/hardware/?department_id=' + row.department.id + '">' + row.department.name + '</a>';
+            return row.department.name;
         }
     }
 

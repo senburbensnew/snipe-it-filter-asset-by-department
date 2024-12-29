@@ -140,6 +140,10 @@ class AssetsController extends Controller
             }
 
             $asset->company_id              = Company::getIdForCurrentUser($request->input('company_id'));
+            // Custom code
+            if ($request->filled('department_id')) {
+                $asset->department_id = $request->input('department_id');
+            }
             $asset->model_id                = $request->input('model_id');
             $asset->order_number            = $request->input('order_number');
             $asset->notes                   = $request->input('notes');
@@ -396,6 +400,10 @@ class AssetsController extends Controller
 
         $asset->name = $request->input('name');
         $asset->company_id = Company::getIdForCurrentUser($request->input('company_id'));
+        // Custom code
+        if ($request->filled('department_id')) {
+            $asset->department_id = $request->input('department_id');
+        }
         $asset->model_id = $request->input('model_id');
         $asset->order_number = $request->input('order_number');
 
