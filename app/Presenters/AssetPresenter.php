@@ -35,8 +35,16 @@ class AssetPresenter extends Presenter
                 'switchable' => true,
                 'title' => trans('general.company'),
                 'visible' => false,
-                'formatter' => 'assetCompanyObjFilterFormatter',
+                'formatter' => 'assetCompanyObjFilterFormatter'
             ], [
+                'field' => 'department',
+                'searchable' => true,
+                'sortable' => true,
+                'switchable' => true,
+                'title' => trans('general.department'),
+                'visible' => false,
+                'formatter' => 'assetDepartmentObjFilterFormatter',
+            ],[
                 'field' => 'name',
                 'searchable' => true,
                 'sortable' => true,

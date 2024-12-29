@@ -71,6 +71,7 @@ return [
     'clear_selection'		=> 'Effacer la sélection',
     'companies'			    => 'Compagnies',
     'company'				=> 'Compagnie',
+    'department'			=> 'Departement',
     'component'			    => 'Composant',
     'components'			=> 'Composants',
     'complete'				=> 'Terminé',

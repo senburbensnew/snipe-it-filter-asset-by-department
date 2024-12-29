@@ -88,6 +88,7 @@ class Asset extends Depreciable
         'model_id'       => 'integer',
         'status_id'      => 'integer',
         'company_id'     => 'integer',
+        'department_id'     => 'integer',
         'location_id'    => 'integer',
         'rtd_company_id' => 'integer',
         'supplier_id'    => 'integer',
@@ -102,6 +103,7 @@ class Asset extends Depreciable
         'asset_tag'         => ['required', 'min:1', 'max:255', 'unique_undeleted:assets,asset_tag', 'not_array'],
         'name'              => ['nullable', 'max:255'],
         'company_id'        => ['nullable', 'integer', 'exists:companies,id'],
+        'department_id'     => ['nullable', 'integer', 'exists:departments,id'],
         'warranty_months'   => ['nullable', 'numeric', 'digits_between:0,240'],
         'last_checkout'     => ['nullable', 'date_format:Y-m-d H:i:s'],
         'last_checkin'      => ['nullable', 'date_format:Y-m-d H:i:s'],
@@ -137,6 +139,7 @@ class Asset extends Depreciable
         'assigned_to',
         'assigned_type',
         'company_id',
+        'department_id',
         'image',
         'location_id',
         'model_id',
@@ -197,6 +200,7 @@ class Asset extends Depreciable
         'assetstatus'        => ['name'],
         'supplier'           => ['name'],
         'company'            => ['name'],
+        'department'         => ['name'],
         'defaultLoc'         => ['name'],
         'location'           => ['name'],
         'model'              => ['name', 'model_number', 'eol'],
@@ -283,6 +287,12 @@ class Asset extends Depreciable
     public function company()
     {
         return $this->belongsTo(\App\Models\Company::class, 'company_id');
+    }
+
+    // Custom code
+    public function department()
+    {
+        return $this->belongsTo(\App\Models\Department::class, 'department_id');
     }
 
     /**
@@ -613,12 +623,6 @@ class Asset extends Depreciable
         return $this->belongsTo(\App\Models\Location::class, 'rtd_location_id');
     }
 
-    // Custom code
-    
-    public function department()
-    {
-        return $this->belongsTo(\App\Models\Department::class);
-    }
 
     /**
      * Get the image URL of the asset.

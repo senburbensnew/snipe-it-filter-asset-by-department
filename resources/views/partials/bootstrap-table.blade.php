@@ -740,6 +740,14 @@
         }
     }
 
+    function assetDepartmentObjFilterFormatter(value, row) {
+        console.log(row);
+
+        if ((row) && (row.department)) {
+            return '<a href="{{ config('app.url') }}/hardware/?company_id=' + row.department.id + '">' + row.department.name + '</a>';
+        }
+    }
+
     function usersCompanyObjFilterFormatter(value, row) {
         if (value) {
             return '<a href="{{ config('app.url') }}/users/?company_id=' + row.id + '">' + value + '</a>';
