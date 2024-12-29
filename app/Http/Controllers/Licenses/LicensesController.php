@@ -35,7 +35,15 @@ class LicensesController extends Controller
     {
         $this->authorize('view', License::class);
 
-        return view('licenses/index');
+        // Custom code
+        $currentUser = auth()->user();
+        $permissions = json_decode($currentUser->permissions, true);
+        $isSuperuser = $permissions['superuser'];
+        $isAdmin = $permissions['admin'];
+
+        return view('licenses/index')->with('department_id', $currentUser->department_id)
+                                     ->with('isSuperUser', $isSuperuser)
+                                     ->with('isAdmin', $isAdmin);
     }
 
     /**
@@ -80,6 +88,10 @@ class LicensesController extends Controller
         $license = new License();
         // Save the license data
         $license->company_id        = Company::getIdForCurrentUser($request->input('company_id'));
+        // Custom code
+        if ($request->filled('department_id')) {
+            $license->department_id = $request->input('department_id');
+        }
         $license->depreciation_id   = $request->input('depreciation_id');
         $license->expiration_date   = $request->input('expiration_date');
         $license->license_email     = $request->input('license_email');
@@ -162,6 +174,10 @@ class LicensesController extends Controller
         $this->authorize('update', $license);
 
         $license->company_id        = Company::getIdForCurrentUser($request->input('company_id'));
+        // Custom code
+        if ($request->filled('department_id')) {
+            $license->department_id = $request->input('department_id');
+        }
         $license->depreciation_id   = $request->input('depreciation_id');
         $license->expiration_date   = $request->input('expiration_date');
         $license->license_email     = $request->input('license_email');

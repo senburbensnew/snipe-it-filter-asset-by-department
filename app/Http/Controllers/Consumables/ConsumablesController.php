@@ -34,7 +34,15 @@ class ConsumablesController extends Controller
     {
         $this->authorize('index', Consumable::class);
 
-        return view('consumables/index');
+        // Custom code
+        $currentUser = auth()->user();
+        $permissions = json_decode($currentUser->permissions, true);
+        $isSuperuser = $permissions['superuser'];
+        $isAdmin = $permissions['admin'];
+
+        return view('consumables/index')->with('department_id', $currentUser->department_id)
+                                        ->with('isSuperUser', $isSuperuser)
+                                        ->with('isAdmin', $isAdmin);
     }
 
     /**
@@ -73,6 +81,10 @@ class ConsumablesController extends Controller
         $consumable->supplier_id            = $request->input('supplier_id');
         $consumable->location_id            = $request->input('location_id');
         $consumable->company_id             = Company::getIdForCurrentUser($request->input('company_id'));
+                // Custom code
+                if ($request->filled('department_id')) {
+                    $consumable->department_id = $request->input('department_id');
+                }
         $consumable->order_number           = $request->input('order_number');
         $consumable->min_amt                = $request->input('min_amt');
         $consumable->manufacturer_id        = $request->input('manufacturer_id');
@@ -150,6 +162,10 @@ class ConsumablesController extends Controller
         $consumable->supplier_id            = $request->input('supplier_id');
         $consumable->location_id            = $request->input('location_id');
         $consumable->company_id             = Company::getIdForCurrentUser($request->input('company_id'));
+                // Custom code
+                if ($request->filled('department_id')) {
+                    $consumable->department_id = $request->input('department_id');
+                }
         $consumable->order_number           = $request->input('order_number');
         $consumable->min_amt                = $request->input('min_amt');
         $consumable->manufacturer_id        = $request->input('manufacturer_id');

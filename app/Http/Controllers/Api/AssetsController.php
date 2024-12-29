@@ -331,14 +331,11 @@ class AssetsController extends Controller
         }
 
         // Custom code
-        // if($request->input('isSuperUser') == '1' || $request->input('isAdmin') == '1'){
-        if($request->boolean('isSuperUser') || $request->boolean('isAdmin')){
-
-        }else{
+        if (!$request->boolean('isSuperUser') && !$request->boolean('isAdmin')) {
             if ($request->filled('department_id')) {
                 $assets->where('assets.department_id', '=', $request->input('department_id'));
-            }else {
-                // If department_id is not provided or null, ensure no results are returned
+            } else {
+                // Ensure no results are returned if department_id is not provided
                 $assets->whereRaw('1 = 0');
             }
         }

@@ -219,6 +219,7 @@
     // Use this when we're introspecting into a column object and need to link
     function genericColumnObjLinkFormatter(destination) {
         return function (value,row) {
+            console.log(row);
             if ((value) && (value.status_meta)) {
 
                 var text_color;
@@ -741,8 +742,6 @@
     }
 
     function assetDepartmentObjFilterFormatter(value, row) {
-        console.log(row);
-
         if ((row) && (row.department)) {
             // return '<a href="{{ config('app.url') }}/hardware/?department_id=' + row.department.id + '">' + row.department.name + '</a>';
             return row.department.name;

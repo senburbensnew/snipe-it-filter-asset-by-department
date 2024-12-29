@@ -21,7 +21,6 @@
 {{-- Page content --}}
 @section('content')
 
-
 <div class="row">
   <div class="col-md-12">
     <div class="box">
@@ -42,7 +41,12 @@
               data-sort-name="name"
               id="licensesTable"
               class="table table-striped snipe-table"
-              data-url="{{ route('api.licenses.index') }}"
+              data-url="{{ route('api.licenses.index',
+                  array(
+                    'department_id' => $department_id,
+                    'isSuperUser' => $isSuperUser,
+                    'isAdmin' => $isAdmin
+                    )) }}"
               data-export-options='{
             "fileName": "export-licenses-{{ date('Y-m-d') }}",
             "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]

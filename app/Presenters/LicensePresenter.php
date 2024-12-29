@@ -29,6 +29,14 @@ class LicensePresenter extends Presenter
                 'title' => trans('admin/companies/table.title'),
                 'visible' => false,
                 'formatter' => 'companiesLinkObjFormatter',
+            ],[
+                'field' => 'department',
+                'searchable' => true,
+                'sortable' => true,
+                'switchable' => true,
+                'title' => 'Departement',
+                'visible' => true,
+                'formatter' => 'departmentsLinkObjFormatter',
             ], [
                 'field' => 'name',
                 'searchable' => true,

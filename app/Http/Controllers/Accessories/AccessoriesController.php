@@ -31,7 +31,16 @@ class AccessoriesController extends Controller
     public function index() : View
     {
         $this->authorize('index', Accessory::class);
-        return view('accessories/index');
+
+        // Custom code
+        $currentUser = auth()->user();
+        $permissions = json_decode($currentUser->permissions, true);
+        $isSuperuser = $permissions['superuser'];
+        $isAdmin = $permissions['admin'];                     
+
+        return view('accessories/index')->with('department_id', $currentUser->department_id)
+                                        ->with('isSuperUser', $isSuperuser)
+                                        ->with('isAdmin', $isAdmin);
     }
 
     /**
@@ -63,6 +72,10 @@ class AccessoriesController extends Controller
 
         // Update the accessory data
         $accessory->name                    = request('name');
+                // Custom code
+                if ($request->filled('department_id')) {
+                    $accessory->department_id = $request->input('department_id');
+                }
         $accessory->category_id             = request('category_id');
         $accessory->location_id             = request('location_id');
         $accessory->min_amt                 = request('min_amt');
@@ -162,6 +175,10 @@ class AccessoriesController extends Controller
 
             // Update the accessory data
             $accessory->name = request('name');
+                            // Custom code
+                            if ($request->filled('department_id')) {
+                                $accessory->department_id = $request->input('department_id');
+                            }
             $accessory->location_id = request('location_id');
             $accessory->min_amt = request('min_amt');
             $accessory->category_id = request('category_id');

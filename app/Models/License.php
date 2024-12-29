@@ -39,6 +39,7 @@ class License extends Depreciable
         'termination_date' => 'date',
         'category_id'  => 'integer',
         'company_id'   => 'integer',
+        'department_id'     => 'integer',
     ];
 
     protected $rules = [
@@ -302,6 +303,12 @@ class License extends Depreciable
     public function company()
     {
         return $this->belongsTo(\App\Models\Company::class, 'company_id');
+    }
+
+    // Custom code
+    public function department()
+    {
+        return $this->belongsTo(\App\Models\Department::class, 'department_id');
     }
 
     /**

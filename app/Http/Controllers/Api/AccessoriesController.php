@@ -68,6 +68,16 @@ class AccessoriesController extends Controller
             $accessories->where('company_id', '=', $request->input('company_id'));
         }
 
+        // Custom code
+        if (!$request->boolean('isSuperUser') && !$request->boolean('isAdmin')) {
+            if ($request->filled('department_id')) {
+                $accessories->where('accessories.department_id', '=', $request->input('department_id'));
+            } else {
+            // Ensure no results are returned if department_id is not provided
+                $accessories->whereRaw('1 = 0');
+            }
+        }
+
         if ($request->filled('category_id')) {
             $accessories->where('category_id', '=', $request->input('category_id'));
         }

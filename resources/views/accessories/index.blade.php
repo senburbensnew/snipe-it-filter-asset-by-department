@@ -37,7 +37,12 @@
                 data-sort-order="asc"
                 id="accessoriesTable"
                 class="table table-striped snipe-table"
-                data-url="{{route('api.accessories.index') }}"
+                data-url="{{route('api.accessories.index', 
+                    array(
+                        'department_id' => $department_id,
+                        'isSuperUser' => $isSuperUser,
+                        'isAdmin' => $isAdmin
+                    )) }}"
                 data-export-options='{
                     "fileName": "export-accessories-{{ date('Y-m-d') }}",
                     "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]

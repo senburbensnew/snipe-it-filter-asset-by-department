@@ -14,6 +14,8 @@
 @section('inputFields')
 @include ('partials.forms.edit.name', ['translated_name' => trans('admin/licenses/form.name')])
 @include ('partials.forms.edit.category-select', ['translated_name' => trans('admin/categories/general.category_name'), 'fieldname' => 'category_id', 'required' => 'true', 'category_type' => 'license'])
+<!-- Add Department -->
+@include ('partials.forms.edit.department-select', ['translated_name' => trans('general.department'), 'fieldname' => 'department_id', 'required' => true])
 
 
 

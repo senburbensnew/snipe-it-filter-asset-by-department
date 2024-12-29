@@ -37,7 +37,12 @@
                 data-toolbar="#toolbar"
                 id="consumablesTable"
                 class="table table-striped snipe-table"
-                data-url="{{ route('api.consumables.index') }}"
+                data-url="{{ route('api.consumables.index',
+                    array(
+                        'department_id' => $department_id,
+                        'isSuperUser' => $isSuperUser,
+                        'isAdmin' => $isAdmin
+                    )) }}"
                 data-export-options='{
                 "fileName": "export-consumables-{{ date('Y-m-d') }}",
                 "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]
