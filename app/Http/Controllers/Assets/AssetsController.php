@@ -66,8 +66,8 @@ class AssetsController extends Controller
         // Custom code
         $currentUser = auth()->user();
         $permissions = json_decode($currentUser->permissions, true);
-        $isSuperuser = $permissions['superuser'];
-        $isAdmin = $permissions['admin'];
+        $isSuperuser = array_key_exists('superuser', $permissions) ? (int) $permissions['superuser'] : 0;
+        $isAdmin = array_key_exists('admin', $permissions) ? (int) $permissions['admin'] : 0;
 
         return view('hardware/index')->with('company', $company)
                                      ->with('department_id', $currentUser->department_id)

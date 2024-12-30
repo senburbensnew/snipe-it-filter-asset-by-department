@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\Helper;
 use App\Events\CheckoutableCheckedIn;
 use App\Http\Requests\StoreAssetRequest;
 use App\Http\Requests\UpdateAssetRequest;
@@ -12,7 +13,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Gate;
-use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AssetCheckoutRequest;
 use App\Http\Transformers\AssetsTransformer;
@@ -57,6 +57,7 @@ class AssetsController extends Controller
      */
     public function index(Request $request, $action = null, $upcoming_status = null) : JsonResponse | array
     {
+
         // This handles the legacy audit endpoints :(
         if ($action == 'audit') {
             $action = 'audits';
@@ -331,6 +332,8 @@ class AssetsController extends Controller
         }
 
         // Custom code
+        // Helper::filterByDepartment($request, $assets, 'assets');
+
         if (!$request->boolean('isSuperUser') && !$request->boolean('isAdmin')) {
             if ($request->filled('department_id')) {
                 $assets->where('assets.department_id', '=', $request->input('department_id'));

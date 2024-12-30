@@ -1529,4 +1529,15 @@ class Helper
         }
         return redirect()->back()->with('error', trans('admin/hardware/message.checkout.error'));
     }
+
+    public static function filterByDepartment($request, $query, $table_name) 
+    {
+        if (!$request->boolean('isSuperUser') && !$request->boolean('isAdmin')) {
+            if ($request->filled('department_id')) {
+                $query->where("$table_name.department_id", '=', $request->input('department_id'));
+            } else {
+                $query->whereRaw('1 = 0');
+            }
+        }
+    }    
 }
