@@ -32,6 +32,15 @@ class ComponentPresenter extends Presenter
                 'formatter' => 'companiesLinkObjFormatter',
             ],
             [
+                'field' => 'department',
+                'searchable' => true,
+                'sortable' => true,
+                'switchable' => true,
+                'title' => 'Departement',
+                'visible' => false,
+                'formatter' => 'departmentsLinkObjFormatter',
+            ],
+            [
                 'field' => 'name',
                 'searchable' => true,
                 'sortable' => true,

@@ -34,7 +34,12 @@
                 data-sort-name="name"
                 id="componentsTable"
                 class="table table-striped snipe-table"
-                data-url="{{ route('api.components.index') }}"
+                data-url="{{ route('api.components.index',
+                    array(
+                        'department_id' => $department_id,
+                        'isSuperUser' => $isSuperUser,
+                        'isAdmin' => $isAdmin
+                    )) }}"
                 data-export-options='{
                 "fileName": "export-components-{{ date('Y-m-d') }}",
                 "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]

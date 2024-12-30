@@ -35,7 +35,16 @@ class ComponentsController extends Controller
     {
         $this->authorize('view', Component::class);
 
-        return view('components/index');
+                // Custom code
+                $currentUser = auth()->user();
+                $permissions = json_decode($currentUser->permissions, true);
+                $isSuperuser = $permissions['superuser'];
+                $isAdmin = $permissions['admin'];
+        
+
+        return view('components/index')->with('department_id', $currentUser->department_id)
+                                        ->with('isSuperUser', $isSuperuser)
+                                        ->with('isAdmin', $isAdmin);
     }
 
 
@@ -77,6 +86,10 @@ class ComponentsController extends Controller
         $component->model_number           = $request->input('model_number');
         $component->location_id            = $request->input('location_id');
         $component->company_id             = Company::getIdForCurrentUser($request->input('company_id'));
+                        // Custom code
+                        if ($request->filled('department_id')) {
+                            $component->department_id = $request->input('department_id');
+                        }
         $component->order_number           = $request->input('order_number', null);
         $component->min_amt                = $request->input('min_amt', null);
         $component->serial                 = $request->input('serial', null);
@@ -156,6 +169,10 @@ class ComponentsController extends Controller
         $component->model_number           = $request->input('model_number');
         $component->location_id            = $request->input('location_id');
         $component->company_id             = Company::getIdForCurrentUser($request->input('company_id'));
+        // Custom code
+        if ($request->filled('department_id')) {
+            $component->department_id = $request->input('department_id');
+        }
         $component->order_number           = $request->input('order_number');
         $component->min_amt                = $request->input('min_amt');
         $component->serial                 = $request->input('serial');

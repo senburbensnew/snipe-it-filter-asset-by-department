@@ -48,6 +48,10 @@ class ComponentsTransformer
                 'id' => (int) $component->company->id,
                 'name' => e($component->company->name),
             ] : null,
+            'department'   => ($component->department) ? [
+                'id' => (int) $component->department->id,
+                'name' => e($component->department->name),
+            ] : null,
             'notes' => ($component->notes) ? Helper::parseEscapedMarkedownInline($component->notes) : null,
             'created_by' => ($component->adminuser) ? [
                 'id' => (int) $component->adminuser->id,

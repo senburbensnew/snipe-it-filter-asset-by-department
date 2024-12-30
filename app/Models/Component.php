@@ -171,6 +171,12 @@ class Component extends SnipeModel
         return $this->belongsTo(\App\Models\Company::class, 'company_id');
     }
 
+            // Custom code
+            public function department()
+            {
+                return $this->belongsTo(\App\Models\Department::class, 'department_id');
+            }
+
     /**
      * Establishes the component -> category relationship
      *
