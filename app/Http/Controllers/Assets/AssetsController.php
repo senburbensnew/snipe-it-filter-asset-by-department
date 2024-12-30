@@ -63,13 +63,7 @@ class AssetsController extends Controller
         $this->authorize('index', Asset::class);
         $company = Company::find($request->input('company_id'));
 
-        // Custom code
-        $currentUser = auth()->user();
-        
-        return view('hardware/index')->with('company', $company)
-                                     ->with('department_id', $currentUser->department_id)
-                                     ->with('isSuperUser', $currentUser->isSuperUser('superuser'))
-                                     ->with('isAdmin', $currentUser->isAdmin('admin'));
+        return view('hardware/index')->with('company', $company);
     }
 
     /**

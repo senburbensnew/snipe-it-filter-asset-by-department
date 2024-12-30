@@ -32,12 +32,7 @@ class AccessoriesController extends Controller
     {
         $this->authorize('index', Accessory::class);
 
-        // Custom code
-        $currentUser = auth()->user();
-
-        return view('accessories/index')->with('department_id', $currentUser->department_id)
-                                        ->with('isSuperUser', $currentUser->isSuperUser('superuser'))
-                                        ->with('isAdmin', $currentUser->isAdmin('admin'));
+        return view('accessories/index');
     }
 
     /**

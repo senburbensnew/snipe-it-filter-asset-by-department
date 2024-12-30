@@ -69,11 +69,13 @@ class AccessoriesController extends Controller
         }
 
         // Custom code
-        if (!$request->boolean('isSuperUser') && !$request->boolean('isAdmin')) {
-            if ($request->filled('department_id')) {
-                $accessories->where('accessories.department_id', '=', $request->input('department_id'));
+        $currentUser = auth()->user();
+
+        if (!$currentUser->isSuperUser() && !$currentUser->isAdmin()) {
+            if ($currentUser->department_id) {
+                $accessories->where('accessories.department_id', '=', $currentUser->department_id);
             } else {
-            // Ensure no results are returned if department_id is not provided
+                // Ensure no results are returned if department_id is not provided
                 $accessories->whereRaw('1 = 0');
             }
         }

@@ -70,10 +70,11 @@ class LicensesController extends Controller
             $licenses->where('depreciation_id', '=', $request->input('depreciation_id'));
         }
 
-        // Custom code
-        if (!$request->boolean('isSuperUser') && !$request->boolean('isAdmin')) {
-            if ($request->filled('department_id')) {
-                $licenses->where('licenses.department_id', '=', $request->input('department_id'));
+        $currentUser = auth()->user();
+
+        if (!$currentUser->isSuperUser() && !$currentUser->isAdmin()) {
+            if ($currentUser->department_id) {
+                $licenses->where('licenses.department_id', '=', $currentUser->department_id);
             } else {
                 // Ensure no results are returned if department_id is not provided
                 $licenses->whereRaw('1 = 0');

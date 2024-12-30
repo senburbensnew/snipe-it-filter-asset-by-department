@@ -334,9 +334,11 @@ class AssetsController extends Controller
         // Custom code
         // Helper::filterByDepartment($request, $assets, 'assets');
 
-        if (!$request->boolean('isSuperUser') && !$request->boolean('isAdmin')) {
-            if ($request->filled('department_id')) {
-                $assets->where('assets.department_id', '=', $request->input('department_id'));
+        $currentUser = auth()->user();
+
+        if (!$currentUser->isSuperUser() && !$currentUser->isAdmin()) {
+            if ($currentUser->department_id) {
+                $assets->where('assets.department_id', '=', $currentUser->department_id);
             } else {
                 // Ensure no results are returned if department_id is not provided
                 $assets->whereRaw('1 = 0');

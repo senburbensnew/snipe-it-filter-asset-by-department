@@ -35,12 +35,7 @@ class LicensesController extends Controller
     {
         $this->authorize('view', License::class);
 
-        // Custom code
-        $currentUser = auth()->user();
-
-        return view('licenses/index')->with('department_id', $currentUser->department_id)
-                                    ->with('isSuperUser', $currentUser->isSuperUser('superuser'))
-                                    ->with('isAdmin', $currentUser->isAdmin('admin'));
+        return view('licenses/index');
     }
 
     /**

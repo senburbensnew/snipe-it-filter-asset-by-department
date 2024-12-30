@@ -33,13 +33,8 @@ class ConsumablesController extends Controller
     public function index()
     {
         $this->authorize('index', Consumable::class);
-
-        // Custom code
-        $currentUser = auth()->user();
         
-        return view('consumables/index')->with('department_id', $currentUser->department_id)
-                                        ->with('isSuperUser', $currentUser->isSuperUser('superuser'))
-                                        ->with('isAdmin', $currentUser->isAdmin('admin'));
+        return view('consumables/index');
     }
 
     /**
