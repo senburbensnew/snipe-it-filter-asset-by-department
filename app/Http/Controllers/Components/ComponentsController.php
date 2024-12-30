@@ -35,16 +35,12 @@ class ComponentsController extends Controller
     {
         $this->authorize('view', Component::class);
 
-                // Custom code
-                $currentUser = auth()->user();
-                $permissions = json_decode($currentUser->permissions, true);
-                $isSuperuser = array_key_exists('superuser', $permissions) ? (int) $permissions['superuser'] : 0;
-                $isAdmin = array_key_exists('admin', $permissions) ? (int) $permissions['admin'] : 0;
-        
+        // Custom code
+        $currentUser = auth()->user();
 
         return view('components/index')->with('department_id', $currentUser->department_id)
-                                        ->with('isSuperUser', $isSuperuser)
-                                        ->with('isAdmin', $isAdmin);
+                                        ->with('isSuperUser', $currentUser->isSuperUser('superuser'))
+                                        ->with('isAdmin', $currentUser->isAdmin('admin'));
     }
 
 
