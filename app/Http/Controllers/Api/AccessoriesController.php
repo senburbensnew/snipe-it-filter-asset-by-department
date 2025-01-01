@@ -69,16 +69,7 @@ class AccessoriesController extends Controller
         }
 
         // Custom code
-        $currentUser = auth()->user();
-
-        if (!$currentUser->isSuperUser() && !$currentUser->isAdmin()) {
-            if ($currentUser->department_id) {
-                $accessories->where('accessories.department_id', '=', $currentUser->department_id);
-            } else {
-                // Ensure no results are returned if department_id is not provided
-                $accessories->whereRaw('1 = 0');
-            }
-        }
+        Helper::filterByDepart($accessories, 'accessories');
 
         if ($request->filled('category_id')) {
             $accessories->where('category_id', '=', $request->input('category_id'));

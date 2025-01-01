@@ -43,16 +43,9 @@ class ConsumablesController extends Controller
             $consumables->where('company_id', '=', $request->input('company_id'));
         }
 
-        $currentUser = auth()->user();
+        // Custom code
+        Helper::filterByDepartment($consumables, 'consumables');
 
-        if (!$currentUser->isSuperUser() && !$currentUser->isAdmin()) {
-            if ($currentUser->department_id) {
-                $consumables->where('consumables.department_id', '=', $currentUser->department_id);
-            } else {
-                // Ensure no results are returned if department_id is not provided
-                $consumables->whereRaw('1 = 0');
-            }
-        }
 
         if ($request->filled('category_id')) {
             $consumables->where('category_id', '=', $request->input('category_id'));

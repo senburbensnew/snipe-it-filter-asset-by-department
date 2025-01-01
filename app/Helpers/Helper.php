@@ -1530,12 +1530,15 @@ class Helper
         return redirect()->back()->with('error', trans('admin/hardware/message.checkout.error'));
     }
 
-    public static function filterByDepartment($request, $query, $table_name) 
+    public static function filterByDepartment($query, $table_name) 
     {
-        if (!$request->boolean('isSuperUser') && !$request->boolean('isAdmin')) {
-            if ($request->filled('department_id')) {
-                $query->where("$table_name.department_id", '=', $request->input('department_id'));
+        $currentUser = auth()->user();
+
+        if (!$currentUser->isSuperUser() && !$currentUser->isAdmin()) {
+            if ($currentUser->department_id) {
+                $query->where("$table_name.department_id", '=', $currentUser->department_id);
             } else {
+                // Ensure no results are returned if department_id is not provided
                 $query->whereRaw('1 = 0');
             }
         }

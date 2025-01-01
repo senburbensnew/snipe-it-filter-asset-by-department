@@ -70,16 +70,9 @@ class LicensesController extends Controller
             $licenses->where('depreciation_id', '=', $request->input('depreciation_id'));
         }
 
-        $currentUser = auth()->user();
+        // Custom code
+        Helper::filterByDepartment($licenses, 'licenses');
 
-        if (!$currentUser->isSuperUser() && !$currentUser->isAdmin()) {
-            if ($currentUser->department_id) {
-                $licenses->where('licenses.department_id', '=', $currentUser->department_id);
-            } else {
-                // Ensure no results are returned if department_id is not provided
-                $licenses->whereRaw('1 = 0');
-            }
-        }
 
         if ($request->filled('created_by')) {
             $licenses->where('created_by', '=', $request->input('created_by'));

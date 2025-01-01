@@ -62,16 +62,8 @@ class ComponentsController extends Controller
             $components->where('company_id', '=', $request->input('company_id'));
         }
 
-        $currentUser = auth()->user();
-
-        if (!$currentUser->isSuperUser() && !$currentUser->isAdmin()) {
-            if ($currentUser->department_id) {
-                $components->where('components.department_id', '=', $currentUser->department_id);
-            } else {
-                // Ensure no results are returned if department_id is not provided
-                $components->whereRaw('1 = 0');
-            }
-        }
+        // Custom code
+        Helper::filterByDepartment($components, 'components');
 
         if ($request->filled('category_id')) {
             $components->where('category_id', '=', $request->input('category_id'));
