@@ -36,7 +36,7 @@ class ComponentPresenter extends Presenter
                 'searchable' => true,
                 'sortable' => true,
                 'switchable' => true,
-                'title' => 'Departement',
+                'title' => 'Department',
                 'visible' => false,
                 'formatter' => 'departmentsLinkObjFormatter',
             ],

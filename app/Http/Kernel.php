@@ -26,7 +26,6 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\SecurityHeaders::class,
         \App\Http\Middleware\PreventBackHistory::class,
         \Illuminate\Http\Middleware\HandleCors::class,
-
     ];
 
     /**
