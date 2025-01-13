@@ -20,7 +20,7 @@ class DepartmentsController extends Controller
      * @author [Godfrey Martinez] [<snipe@snipe.net>]
      * @since [v4.0]
      */
-    public function index(Request $request) : JsonResponse | array
+    public function index(Request $request): JsonResponse|array
     {
         $this->authorize('view', Department::class);
         $allowed_columns = ['id', 'name', 'image', 'users_count'];
@@ -90,7 +90,7 @@ class DepartmentsController extends Controller
      * @since [v4.0]
      * @param  \App\Http\Requests\ImageUploadRequest  $request
      */
-    public function store(ImageUploadRequest $request) : JsonResponse
+    public function store(ImageUploadRequest $request): JsonResponse
     {
         $this->authorize('create', Department::class);
         $department = new Department;
@@ -114,7 +114,7 @@ class DepartmentsController extends Controller
      * @since [v4.0]
      * @param  int  $id
      */
-    public function show($id) : array
+    public function show($id): array
     {
         $this->authorize('view', Department::class);
         $department = Department::findOrFail($id);
@@ -129,7 +129,7 @@ class DepartmentsController extends Controller
      * @param  \App\Http\Requests\ImageUploadRequest  $request
      * @param  int  $id
      */
-    public function update(ImageUploadRequest $request, $id) : JsonResponse
+    public function update(ImageUploadRequest $request, $id): JsonResponse
     {
         $this->authorize('update', Department::class);
         $department = Department::findOrFail($id);
@@ -151,7 +151,7 @@ class DepartmentsController extends Controller
      * @param int $locationId
      * @since [v4.0]
      */
-    public function destroy($id) : JsonResponse
+    public function destroy($id): JsonResponse
     {
         $department = Department::findOrFail($id);
 
@@ -173,7 +173,7 @@ class DepartmentsController extends Controller
      * @since [v4.0.16]
      * @see \App\Http\Transformers\SelectlistTransformer
      */
-    public function selectlist(Request $request) : array
+    public function selectlist(Request $request): array
     {
 
         $this->authorize('view.selectlists');
@@ -181,10 +181,11 @@ class DepartmentsController extends Controller
             'id',
             'name',
             'image',
+            'company_id'
         ]);
 
         if ($request->filled('search')) {
-            $departments = $departments->where('name', 'LIKE', '%'.$request->get('search').'%');
+            $departments = $departments->where('name', 'LIKE', '%' . $request->get('search') . '%');
         }
 
         $departments = $departments->orderBy('name', 'ASC')->paginate(50);
@@ -193,7 +194,7 @@ class DepartmentsController extends Controller
         // This lets us have more flexibility in special cases like assets, where
         // they may not have a ->name value but we want to display something anyway
         foreach ($departments as $department) {
-            $department->use_image = ($department->image) ? Storage::disk('public')->url('departments/'.$department->image, $department->image) : null;
+            $department->use_image = ($department->image) ? Storage::disk('public')->url('departments/' . $department->image, $department->image) : null;
         }
 
         return (new SelectlistTransformer)->transformSelectlist($departments);

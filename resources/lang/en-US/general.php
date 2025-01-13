@@ -105,7 +105,6 @@ return [
     'delete_seats'  		=> 'Deleted Seats',
     'deletion_failed'       => 'Deletion failed',
     'departments'           => 'Departments',
-    'department'            => 'Department',
     'deployed'				=> 'Deployed',
     'depreciation'			=> 'Depreciation',
     'depreciations'         => 'Depreciations',

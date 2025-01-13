@@ -73,5 +73,6 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'health' => null,
+        'superuser' => \App\Http\Middleware\CheckIfSuperUserForDepartment::class,
     ];
 }

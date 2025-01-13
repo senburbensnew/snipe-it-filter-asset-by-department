@@ -267,7 +267,8 @@
 
                     return '<nobr><a href="{{ config('app.url') }}/' + destination + '/' + value.id +
                         '" data-tooltip="true" title="' + status_meta[value.status_meta] + '"> <i class="fa ' +
-                        icon_style + ' text-' + text_color + '"></i> ' + value.name + ' ' + text_help + ' </a> </nobr>';
+                        icon_style + ' text-' + text_color + '"></i> ' + value.name + ' ' + text_help +
+                        ' </a> </nobr>';
                 } else if ((value) && (value.name)) {
 
                     // Add some overrides for any funny urls we have
@@ -728,7 +729,6 @@
                 return '<a href="{{ config('app.url') }}/departments/' + row.assigned_user.department.id + '">' + row
                     .assigned_user.department.name + '</a>';
             }
-
         }
 
         function assetNameLinkFormatter(value, row) {
@@ -798,6 +798,7 @@
         }
 
         function assetDepartmentObjFilterFormatter(value, row) {
+            console.log(value, row);
             if ((row) && (row.department)) {
                 return row.department.name;
             }

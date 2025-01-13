@@ -1280,6 +1280,39 @@
     });
 </script> --}}
 
+<script>
+    const companySelect = document.getElementById('company_select');
+    const departmentSelect = document.getElementById('department_select');
+    const pattern = "api/v1/departments/selectlist";
+    var patternExists = false;
+
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (settings.url.includes(pattern)) {
+                patternExists = true;
+            } else {
+                patternExists = false;
+            }
+        },
+        complete: function(xhr, status) {
+            var isSuperUser = xhr.getResponseHeader('is_super_user');
+
+            if (patternExists) {
+                if (isSuperUser === '1' && companySelect) {
+                    const selectedCompanyId = companySelect.value;
+                    if (Array.isArray(xhr.responseJSON.results)) {
+                        const filteredDepartments = xhr.responseJSON.results.filter(department => {
+                            return String(department.company_id) === String(selectedCompanyId);
+                        });
+
+                        xhr.responseJSON.results = filteredDepartments;
+                    }
+                }
+            }
+        }
+    });
+</script>
+
 </body>
 
 </html>
